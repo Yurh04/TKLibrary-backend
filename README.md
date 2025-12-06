@@ -15,7 +15,7 @@
 {id,content,answer,subject} 
 
 - AI问答：POST /api/questions/ask
-{}
+{question}
 
 ## 前端：
 题目列表、题目详情、添加编辑题目、做题（AI打分）

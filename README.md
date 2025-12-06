@@ -1,5 +1,5 @@
 ## 后端：
-保存题目，AI打分
+保存题目，自动打分，ai问答
 
 ### api: //axios 
 - 保存题目：POST /api/addQuestions

@@ -38,6 +38,7 @@ public class QuestionServiceImpl implements QuestionService {
             question.setContent(questionDetails.getContent());
             question.setAnswer(questionDetails.getAnswer());
             question.setSubject(questionDetails.getSubject());
+            question.setTag(questionDetails.getTag());
             return questionRepository.save(question);
         }
         return null;

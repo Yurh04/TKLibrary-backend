@@ -16,8 +16,9 @@ public class Question {
     @NotBlank(message = "答案不能为空")
     private String answer;
     
-    @NotBlank(message = "科目不能为空")
     private String subject;
+    
+    private String tag;
     
     // Getters and Setters
     public Long getId() {
@@ -50,5 +51,13 @@ public class Question {
     
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+    
+    public String getTag() {
+        return tag;
+    }
+    
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

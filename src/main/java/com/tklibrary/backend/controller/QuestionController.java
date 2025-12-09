@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
 public class QuestionController {
     
     @Autowired
@@ -94,6 +93,18 @@ public class QuestionController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("success", false, "error", e.getMessage()));
+        }
+    }
+    
+    // 删除题目
+    @PostMapping("/deleteQuestions")
+    public ResponseEntity<Void> deleteQuestion(@RequestBody Map<String, Object> request) {
+        try {
+            Long id = Long.parseLong(request.get("id").toString());
+            questionService.deleteQuestion(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }

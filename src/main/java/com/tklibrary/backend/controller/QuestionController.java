@@ -98,13 +98,21 @@ public class QuestionController {
     
     // 删除题目
     @PostMapping("/deleteQuestions")
-    public ResponseEntity<Void> deleteQuestion(@RequestBody Map<String, Object> request) {
+    public ResponseEntity<?> deleteQuestion(@RequestBody Map<String, Object> request) {
         try {
-            Long id = Long.parseLong(request.get("id").toString());
+            Object idObj = request.get("id");
+            if (idObj == null) {
+                return ResponseEntity.badRequest().body("ID is missing");
+            }
+            Long id = Long.parseLong(idObj.toString());
             questionService.deleteQuestion(id);
             return ResponseEntity.noContent().build();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Invalid ID format: " + e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error deleting question: " + e.getMessage());
         }
     }
 }

@@ -174,17 +174,19 @@ public class AIServiceImpl implements AIService {
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost httpPost = new HttpPost(qwenApiUrl);
             
-            // 设置请求头
-            httpPost.setHeader("Content-Type", "application/json");
+            // 设置请求头，明确指定UTF-8编码
+            httpPost.setHeader("Content-Type", "application/json; charset=UTF-8");
             httpPost.setHeader("Authorization", "Bearer " + dashscopeApiKey);
             
-            // 设置请求体
-            StringEntity entity = new StringEntity(new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(requestBody));
+            // 设置请求体，指定UTF-8编码以支持中文
+            String jsonBody = new com.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(requestBody);
+            StringEntity entity = new StringEntity(jsonBody, java.nio.charset.StandardCharsets.UTF_8);
             httpPost.setEntity(entity);
             
             // 执行请求
             try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
-                String responseBody = EntityUtils.toString(response.getEntity());
+                // 解析响应时指定UTF-8编码
+                String responseBody = EntityUtils.toString(response.getEntity(), "UTF-8");
                 logger.info("AI API响应: {}", responseBody);
                 
                 // 解析响应
